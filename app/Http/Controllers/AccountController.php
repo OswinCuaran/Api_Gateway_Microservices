@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Http;
 
 class AccountController extends Controller
 {
+    //Flask
     private $token;
     public function __construct()
     {
@@ -17,7 +18,6 @@ class AccountController extends Controller
     public function example(Request $request){
         $response = Http::post('http://localhost:5000/example',[
             "token" => $this -> token
-            //"dato"  => $request->input('el_dato')
         ]);
         return response() -> json($response->json());
     }
