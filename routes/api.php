@@ -8,7 +8,7 @@ use App\Http\Controllers\ExpressController;
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
-Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
+Route::post('/password/reset', [UserController::class, 'resetPassword']);
 
 // FLASK
 Route::post('/example', [AccountController::class, 'example']);
