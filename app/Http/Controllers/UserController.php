@@ -88,4 +88,30 @@ class UserController extends Controller
         ], 200);
     }
 
+    //Funcion para cambiar la contraseña desde la cuenta activa
+    public function updatePassword(Request $request)
+    {
+        //Validamos unicamente las claves
+        $request->validate([
+            'current_password' => 'required|string',
+            'password' => 'required|string|min:8',
+            'password_two' => 'required|string|same:password'
+        ]);
+        //Obtenemos el usuario autenticado a traves del token Sanctum
+        $user = $request->user();
+        //Validar que la contraseña ingresada coincida con la de la base de datos
+        if(!Hash::check($request->current_password, $user->password)){
+            return response() -> json([
+                "response" => "La contraña actual es incorrecta"
+            ], 400);
+        }
+        //Guardamos y encriptamos la nueva contraseña
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return response()->json([
+            "response" => "Se actualizo la contraseña correctamente"
+        ], 200);
+    }
+
 }//FIN
